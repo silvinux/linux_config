@@ -1,0 +1,139 @@
+---
+awx_webhook_event_type: Push Hook
+awx_webhook_event_guid: 72b1bf17bfe59c4aa2071530b4c7754407704fef
+awx_webhook_event_ref: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+awx_webhook_status_api: null
+awx_webhook_payload:
+  object_kind: push
+  event_name: push
+  before: 76633c899fd52b5f199adc5038ecd27e78350fbc
+  after: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+  ref: refs/heads/demo
+  checkout_sha: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+  message: null
+  user_id: 1
+  user_name: Administrator
+  user_username: root
+  user_email: null
+  user_avatar: >-
+    https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon
+  project_id: 36
+  project:
+    id: 36
+    name: Simple Ansible Inventory
+    description: ''
+    web_url: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    avatar_url: null
+    git_ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    git_http_url: >-
+      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
+    namespace: Administrator
+    visibility_level: 0
+    path_with_namespace: root/simple-ansible-inventory
+    default_branch: master
+    ci_config_path: null
+    homepage: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    http_url: >-
+      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
+  commits:
+    - id: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+      message: |
+        group_vars New Structure
+      title: group_vars New Structure
+      timestamp: '2022-09-04T21:41:41+02:00'
+      url: >-
+        http://gitlab.bcnconsulting.com/root/simple-ansible-inventory/-/commit/3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+      author:
+        name: silvinux
+        email: ansible@aapstdalone.bcnconsulting.com
+      added:
+        - group_vars/dev/linux_config/motd.yml
+        - group_vars/prd/linux_config/motd.yml
+        - host_vars/quorum.bcnconsulting.com/linux_config/motd.yml
+      modified: []
+      removed:
+        - host_vars/quorum.bcnconsulting.com/linux_config_motd.yml
+  total_commits_count: 1
+  push_options: {}
+  repository:
+    name: Simple Ansible Inventory
+    url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    description: ''
+    homepage: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    git_http_url: >-
+      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
+    git_ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    visibility_level: 0
+tower_webhook_event_type: Push Hook
+tower_webhook_event_guid: 72b1bf17bfe59c4aa2071530b4c7754407704fef
+tower_webhook_event_ref: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+tower_webhook_status_api: null
+tower_webhook_payload:
+  object_kind: push
+  event_name: push
+  before: 76633c899fd52b5f199adc5038ecd27e78350fbc
+  after: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+  ref: refs/heads/demo
+  checkout_sha: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+  message: null
+  user_id: 1
+  user_name: Administrator
+  user_username: root
+  user_email: null
+  user_avatar: >-
+    https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon
+  project_id: 36
+  project:
+    id: 36
+    name: Simple Ansible Inventory
+    description: ''
+    web_url: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    avatar_url: null
+    git_ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    git_http_url: >-
+      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
+    namespace: Administrator
+    visibility_level: 0
+    path_with_namespace: root/simple-ansible-inventory
+    default_branch: master
+    ci_config_path: null
+    homepage: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    http_url: >-
+      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
+  commits:
+    - id: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+      message: |
+        group_vars New Structure
+      title: group_vars New Structure
+      timestamp: '2022-09-04T21:41:41+02:00'
+      url: >-
+        http://gitlab.bcnconsulting.com/root/simple-ansible-inventory/-/commit/3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+      author:
+        name: silvinux
+        email: ansible@aapstdalone.bcnconsulting.com
+      added:
+        - group_vars/dev/linux_config.d/motd.yml
+        - group_vars/dev/linux_config.d/sshd.yml
+        - group_vars/dev/linux_config.d/yum.yml
+        - group_vars/dev/linux_config.d/sysctld.yml
+        - group_vars/prd/linux_config.d/motd.yml
+        - host_vars/quorum.bcnconsulting.com/linux_config.d/motd.yml
+        - host_vars/quorum.bcnconsulting.com/linux_config.d/sshd.yml
+      modified: []
+      removed: []
+  total_commits_count: 1
+  push_options: {}
+  repository:
+    name: Simple Ansible Inventory
+    url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    description: ''
+    homepage: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    git_http_url: >-
+      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
+    git_ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    visibility_level: 0
+...
