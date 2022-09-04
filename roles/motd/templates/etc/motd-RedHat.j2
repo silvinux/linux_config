@@ -1,0 +1,18 @@
+{% if linux_config_motd.motd_default_message is defined %}
+{{ linux_config_motd.motd_default_message }}
+{% endif %}
+
+System Information For Hostname: {{ inventory_hostname }}
+
+Distribution: {{ ansible_distribution }}
+Distribution Release: {{ ansible_distribution_release }}
+Distribution Version: {{ ansible_distribution_version }}
+
+Timezone: {{ ansible_date_time.tz }}({{ ansible_date_time.tz_offset }})
+
+{% if ansible_virtualization_role is defined %}
+Virtualization Role: {{ ansible_virtualization_role }}
+{% endif %}
+{% if ansible_virtualization_type is defined %}
+Virtualization Type: {{ ansible_virtualization_type }}
+{% endif %}

@@ -1,0 +1,19 @@
+---
+# tasks file for motd
+- name: OS-MGMT.LINUX-CONFIG.MOTD | Configuring MOTD Static
+  template:
+    src: "etc/motd-{{ ansible_os_family }}.j2"
+    dest: "/etc/motd"
+  become: true
+  when: linux_config_motd.motd_static
+
+- name: OS-MGMT.LINUX-CONFIG.MOTD | Configuring MOTD Dynamic
+  copy:
+    src: "files/etc/profile.d/dymotd.sh"
+    dest: "/etc/profile.d/dymotd.sh"
+    owner: root
+    group: root
+    mode: 0775
+  become: true
+  when: not linux_config_motd.motd_static
+...

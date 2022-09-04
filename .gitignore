@@ -1,0 +1,9 @@
+releases/
+ansible.cfg
+build_collection.sh
+publish_collection.sh
+releases
+inventario
+playbook_dispatch.yml
+playbook.yml
+ansible.cfg
