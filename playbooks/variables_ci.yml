@@ -123,6 +123,7 @@ tower_webhook_payload:
         - group_vars/prd/linux_config.d/motd.yml
         - host_vars/quorum.bcnconsulting.com/linux_config.d/motd.yml
         - host_vars/quorum.bcnconsulting.com/linux_config.d/sshd.yml
+        - host_vars/quorum.bcnconsulting.com/linux_config.d/etc_resolv.yml
       modified: []
       removed: []
   total_commits_count: 1

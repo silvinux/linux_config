@@ -1,0 +1,33 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    dict: {}
+    dict_org:
+      host_vars: ["motd","sshd","etc_resolv"]
+      group_vars: ["motd","sshd","yum"]
+  tasks:
+  - debug:
+      msg:
+      - "{{  dict_org }}"
+      - "{{ (dict_org.host_vars + dict_org.group_vars) | unique }}"
+  #- set_fact:
+  #    dict: "{{ dict | combine( [{'llave': valor_temp[item]|default([]) + [item]  } ]) }}"
+  #  loop: "{{ (dict_org.host_vars + dict_org.group_vars) | unique }}"
+  - set_fact:
+      dg: "{{ dg |default({}) | combine( {'llave': item } ) }}"
+    loop: "{{ dict_org.group_vars }}"
+
+  - set_fact:
+      dh: "{{ dh |default({}) | combine( {'llave': item } ) }}"
+    loop: "{{ dict_org.host_vars }}"
+##'replace', 'keep', 'append', 'prepend', 'append_rp' or 'prepend_rp'"
+#  - set_fact:
+#      dict: "{{ dg | combine(dh, list_merge='append') }}"
+
+  - set_fact:
+      dict: "{{ (dict | default({})) | combine( {'llave': [item] + dh[item] } )  }}"
+    loop: "{{ dg.keys() }}"
+
+  - debug: msg="{{ dict }}"
+

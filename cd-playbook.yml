@@ -1,0 +1,128 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: "Get the modified files over the dirs from all the received commits"
+      set_fact:
+        env: "{{ tower_webhook_payload.ref.split('/')[2] }}"
+        orgs: "{{ tower_webhook_payload.project.name }}"
+        list_of_dirs: "{{ ((tower_webhook_payload.commits | map(attribute='added') | list) +
+                           (tower_webhook_payload.commits | map(attribute='modified') | list) +
+                           (tower_webhook_payload.commits | map(attribute='removed') | list))
+                       | flatten }}"
+
+    - debug: var=list_of_dirs
+
+    - name: "Get the Organization and the tags to run the CasC"
+      set_fact:
+        org_dirs_dict: "{{ (org_dirs_dict | default({})) | combine({input_var[0]: (((org_dirs_dict[input_var[0]] | default([])) + [input_var[1]] ) | unique ) }) }}"
+      vars:
+        #input_var: "{{ item | regex_search('/([^/]*)/env/(?:[^/]*)/configure_controller_(.*).ya?ml', '\\1', '\\2') }}"
+        # input_var: "{{ item | regex_search('([^/]*)/(?:[^/]*)/linux_config.d/(.*).ya?ml', '\\1', '\\2') }}"
+        input_var: "{{ item | regex_search('([^/]*)/(?:[^/]*)/linux_config.d/(.*).ya?ml', '\\1', '\\2') }}"
+        #input_var: "{{ item | regex_search('/([^/]*)/env/(?:[^/]*)/controller_(.*).d/', '\\1', '\\2') }}"
+      loop: "{{ list_of_dirs }}"
+      when: input_var | type_debug is match('list')
+
+    - debug: var=org_dirs_dict
+
+    - set_fact:
+        job_tags_dict: "{{ ((job_tags_dict | default([])) + item.value) | unique }}"
+      loop: "{{ org_dirs_dict | dict2items }}"
+
+    - debug: var=job_tags_dict
+
+    - fail: msg=fallo
+
+    - debug: var=org_dirs_dict.host_vars
+    - debug: var=org_dirs_dict.group_vars
+
+    - set_fact:
+        job_tags_dict: "{{ job_tags_dict | default({}) | combine({'job_tag': item}) }}"
+      loop:
+        - "{{ org_dirs_dict.host_vars }}"
+
+    - debug:
+        msg:
+          - "{{ job_tags_dict }}"
+
+    - set_fact:
+        job_tags_dict1: "{{ job_tags_dict1 | default({}) | combine({'job_tag': item}) }}"
+      loop:
+        - "{{ org_dirs_dict.group_vars }}"
+
+  #org_dirs_dict: "{{ (org_dirs_dict | default({})) | combine({input_var[0]: (((org_dirs_dict[input_var[0]] | default([])) + [input_var[1]] ) | unique ) }) }}"
+
+    - set_fact:
+        job_tags_dict_new: "{{ (job_tags_dict_new | default({})) | combine({'job_tag': (job_tags_dict[item] + job_tags_dict1[item] ) } )  }}"
+      loop: "{{ job_tags_dict.keys() }}"
+
+    - debug:
+        msg:
+          - "AQUI"
+          - "{{ job_tags_dict_new }}"
+        #  - "{{ org_dirs_dict.group_vars + org_dirs_dict.host_vars }}"
+        #- "{{ org_dirs_dict.group_vars |union(org_dirs_dict.host_vars) }}"
+        #- "{{ org_dirs_dict.group_vars |zip(org_dirs_dict.host_vars| reverse) }}"
+
+    - set_fact:
+        dict3: "{{ job_tags_dict |combine(job_tags_dict1, list_merge='append') }}"
+
+    - debug:
+        msg:
+          -  "{{ dict3 }}"
+          -  "{{ dict3.job_tag | unique }}"
+
+    - set_fact:
+        job_dict: "{{ (org_dirs_dict.host_vars + org_dirs_dict.group_vars) | unique }}"
+
+    - debug:
+        msg: "{{ job_dict }}"
+
+
+    - set_fact:
+        dict_1_2: "{{ job_tags_dict|combine(job_tags_dict1, list_merge='append') }}"
+
+    - debug:
+        msg:
+          - "{{ dict_1_2 }}"
+          - "{{ org_dirs_dict }}"
+          - "{{ job_tags_dict }}"
+          - "{{ job_tags_dict1 }}"
+          - "{{ job_tags_dict.job_tag + job_tags_dict1.job_tag }}"
+
+    - set_fact:
+        aaa: "{{ job_tags_dict.job_tag + job_tags_dict1.job_tag }}"
+
+    - debug:
+        msg: "{{ item }}"
+      loop: "{{ job_tags_dict.keys()|list + job_tags_dict1.keys() |list |unique}}"
+
+
+    #- name: "Run the CasC_JobTemplates_AAP_CI_Config_Controller Automation Platform Job to update the objects"
+    #  import_role:
+    #    name: redhat_cop.controller_configuration.job_launch
+
+    #- name: "Run the CasC_JobTemplates_AAP_CI_Config_Controller Automation Platform Job to update the objects"
+    #  ansible.controller.job_launch:
+    #    controller_host: demo-ctr1-dev.bcnconsulting.com
+    #    controller_username: admin
+    #    controller_password: redhat00
+    #    validate_certs: false
+    #    name: "JT_GITOPS"
+    #    extra_vars:
+    #      orgs: "Global"
+    #      dir_orgs_vars: 'orgs_vars'
+    #      ansible_python_interpreter: "/usr/bin/python3"
+    #      env: "dev"
+    #    tags: "{{ org_tags.value }}"
+    #    validate_certs: no
+    #    wait: yes
+    #    verbosity: 0
+    #  #with_dict: "{{ job_tags_dict }}"
+    #  loop: "{{ org_dirs_dict.group_vars |union(org_dirs_dict.host_vars) }}"
+    #  loop_control:
+    #    loop_var: org_tags
+    #  when: job_tags_dict is defined
+...
