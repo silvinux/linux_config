@@ -5,7 +5,6 @@
     name: "{{ __role.role }}"
     apply:
       tags: "{{ __role.tags }}"
-  when: __role.var is defined
   tags: always
   loop: "{{ linux_config_dispatcher_roles }}"
   loop_control:
