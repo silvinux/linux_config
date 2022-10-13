@@ -1,5 +1,5 @@
-{% if linux_config_motd.motd_default_message is defined %}
-{{ linux_config_motd.motd_default_message }}
+{% if linux_config_motd_default_message is defined %}
+{{ linux_config_motd_default_message }}
 {% endif %}
 
 System Information For Hostname: {{ inventory_hostname }}

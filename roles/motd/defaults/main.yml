@@ -1,8 +1,6 @@
 ---
 # defaults file for motd
-
-linux_config_motd:
-  # Defines a default message to apply above any custom messages
-  motd_default_message: "Welcome To My Server"
-  # Defines if static configured motd info using Ansible facts is enabled
-  motd_static: true
+# Defines a default message to apply above any custom messages
+linux_config_motd_default_message: "Welcome To My Server"
+# Defines if static configured motd info using Ansible facts is enabled
+linux_config_motd_static: true
