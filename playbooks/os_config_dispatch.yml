@@ -1,5 +1,5 @@
 ---
-- hosts: motd
+- hosts: all
   gather_facts: yes
   remote_user: ansible
   roles:
