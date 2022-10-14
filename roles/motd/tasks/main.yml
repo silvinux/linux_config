@@ -5,7 +5,7 @@
     src: "etc/motd-{{ ansible_os_family }}.j2"
     dest: "/etc/motd"
   become: true
-  when: linux_config_motd.motd_static
+  when: linux_config_motd_static
 
 - name: OS-MGMT.LINUX-CONFIG.MOTD | Configuring MOTD Dynamic
   copy:
@@ -15,5 +15,5 @@
     group: root
     mode: 0775
   become: true
-  when: not linux_config_motd.motd_static
+  when: not linux_config_motd_static
 ...
