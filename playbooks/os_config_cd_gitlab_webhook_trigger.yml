@@ -20,9 +20,9 @@
         - name: Debug
           debug:
             msg:
-              - "Controller cluster is enabled: {{ ansible_local.controller_cluster.is_active }}"
-              - "OK"
-              - "{{ ansible_local.controller_cluster.location }}"
+             # - "Controller cluster is enabled: {{ ansible_local.controller_cluster.is_active }}"
+             # - "OK"
+             # - "{{ ansible_local.controller_cluster.location }}"
               - "{{ controller_inventory_site_active }}"
 
         - name: "Get the modified files over the dirs from all the received commits"
