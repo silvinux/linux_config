@@ -71,7 +71,8 @@
           loop: "{{ group_dirs_dict | dict2items }}"
           loop_control:
             loop_var: org_tags
-          when: group_dirs_dict is defined and run_groups is defined
+          # when: group_dirs_dict is defined and run_groups is defined
+          when: group_dirs_dict is defined
 
 #### Group Vars Run ####
 
