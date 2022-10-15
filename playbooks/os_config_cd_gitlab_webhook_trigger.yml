@@ -2,17 +2,125 @@
 - hosts: localhost
   connection: local
   gather_facts: no
-  tasks:
-    - name: "Get the modified files over the dirs from all the received commits"
-      set_fact:
-        env: "{{ tower_webhook_payload.ref.split('/')[2] }}"
-        orgs: "{{ tower_webhook_payload.project.name }}"
-        list_of_dirs: "{{ ((tower_webhook_payload.commits | map(attribute='added') | list) +
-                           (tower_webhook_payload.commits | map(attribute='modified') | list) +
-                           (tower_webhook_payload.commits | map(attribute='removed') | list))
-                       | flatten }}"
+  pre_tasks:
+    - debug:
+       msg: "{{ hostvars }}"
+      tags:
+        - test1
 
-    - debug: var=list_of_dirs
+    - name: Collect only selected facts
+      ansible.builtin.setup:
+        filter:
+          - 'ansible_local'
+          - 'ansible_fqdn'
+      tags:
+        - debug
+  tasks:
+    - block:
+        - name: Debug
+          debug:
+            msg:
+              - "Controller cluster is enabled: {{ ansible_local.controller_cluster.is_active }}"
+              - "OK"
+              - "{{ ansible_local.controller_cluster.location }}"
+              - "{{ controller_inventory_site_active }}"
+
+        - name: "Get the modified files over the dirs from all the received commits"
+          set_fact:
+            env: "{{ awx_webhook_payload.ref.split('/')[2] if awx_webhook_payload.ref.split('/')[1] == 'heads' else  awx_webhook_payload.project.default_branch }}"
+            orgs: "{{ awx_webhook_payload.project.name }}"
+            list_of_dirs: "{{ ((awx_webhook_payload.commits | map(attribute='added') | list) +
+                               (awx_webhook_payload.commits | map(attribute='modified') | list) +
+                               (awx_webhook_payload.commits | map(attribute='removed') | list))
+                           | flatten }}"
+
+        - debug: var=list_of_dirs
+
+        - name: Set reg_expressions to filter Groups_Vars
+          set_fact:
+            group_vars_reg_expression: "(group_vars)/(.*)/linux_config_(.*).ya?ml"
+
+        - name: "Get the GROUP_VARS and the tags to run the CasC"
+          set_fact:
+            group_dirs_dict: "{{ (group_dirs_dict | default({})) | combine({group_input_var[1]: (((group_dirs_dict[group_input_var[1]] | default([])) + [group_input_var[2]] ) | unique ) }) }}"
+          vars:
+            group_input_var: "{{ item | regex_search(group_vars_reg_expression, '\\1', '\\2','\\3') }}"
+          loop: "{{ list_of_dirs }}"
+          when: group_input_var | type_debug is match('list')
+
+        - debug: var=group_dirs_dict
+        - debug: var=group_dirs_dict.value
+
+        - name: "Run Group_Var Job to update the objects"
+          ansible.controller.job_launch:
+            controller_host: demo-ctr1-dev.bcnconsulting.com
+            controller_username: admin
+            controller_password: redhat00
+            validate_certs: false
+            name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
+            inventory: "{{ orgs }} SmartInventory {{ org_tags.key }}"
+            extra_vars:
+              orgs: "{{ orgs }}"
+              dir_orgs_vars: 'orgs_vars'
+              ansible_python_interpreter: "/usr/bin/python3"
+              env: "{{ env }}"
+            tags: "{{ org_tags.value }}"
+            validate_certs: no
+            wait: yes
+            verbosity: 0
+          loop: "{{ group_dirs_dict | dict2items }}"
+          loop_control:
+            loop_var: org_tags
+          when: group_dirs_dict is defined and run_groups is defined
+
+#### Group Vars Run ####
+
+        - name: Set reg_expressions to filter Host_Vars
+          set_fact:
+            host_vars_reg_expression: "(host_vars)/(.*)/linux_config_(.*).ya?ml"
+
+        - name: Set reg_expressions to filter Host_Vars
+          set_fact:
+            group_vars_reg_expression: "(host_vars)/(.*)/linux_config_(.*).ya?ml"
+
+        - name: "Get the HOST_VARS and the tags to run the CasC"
+          set_fact:
+            host_dirs_dict: "{{ (host_dirs_dict | default({})) | combine({host_input_var[1]: (((host_dirs_dict[host_input_var[1]] | default([])) + [host_input_var[2]] ) | unique ) }) }}"
+          vars:
+            host_input_var: "{{ item | regex_search(host_vars_reg_expression, '\\1', '\\2','\\3') }}"
+          loop: "{{ list_of_dirs }}"
+          when: host_input_var | type_debug is match('list')
+
+        - debug: var=host_dirs_dict
+
+        - name: "Run Host_Var Job to update the objects"
+          ansible.controller.job_launch:
+            controller_host: demo-ctr1-dev.bcnconsulting.com
+            controller_username: admin
+            controller_password: redhat00
+            validate_certs: false
+            name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
+            inventory: "{{ orgs }} {{ env }} Inventory OsConfig"
+            limit: "{{ org_tags.key }}"
+            extra_vars:
+              orgs: "{{ orgs }}"
+              dir_orgs_vars: 'orgs_vars'
+              ansible_python_interpreter: "/usr/bin/python3"
+              env: "{{ env }}"
+            tags: "{{ org_tags.value }}"
+            validate_certs: no
+            wait: yes
+            verbosity: 0
+          loop: "{{ host_dirs_dict | dict2items }}"
+          loop_control:
+            loop_var: org_tags
+          when: host_dirs_dict is defined
+      tags:
+        - debug
+      when:
+        - ansible_local.controller_cluster.is_active
+        - ansible_local.controller_cluster.location | upper == controller_inventory_site_active | upper
+
 
     - name: "Get the Organization and the tags to run the CasC"
       set_fact:
@@ -41,9 +149,9 @@
         controller_username: admin
         controller_password: redhat00
         validate_certs: false
-        name: "JT_GITOPS"
+        name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
         extra_vars:
-          orgs: "Global"
+          orgs: "{{ orgs }}"
           dir_orgs_vars: 'orgs_vars'
           ansible_python_interpreter: "/usr/bin/python3"
           env: "dev"

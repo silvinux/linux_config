@@ -1,0 +1,23 @@
+---
+# defaults file for ansible_local_facts
+
+#  Ansible local facts directory variables
+ansible_local_facts_dir:
+  path: "/etc/ansible/facts.d"
+  owner: root
+  group: root
+  mode: '0755'
+
+# Ansible local facts file list
+ansible_local_facts_files:
+  - { name: site_location.fact, owner: root, group: root, mode: '0755' }
+  - { name: controller_cluster.fact, owner: root, group: root, mode: '0755' }
+  - { name: dummy.fact, owner: root, group: root, mode: '0644' }
+
+# Ansible local facts template list
+ansible_local_facts_templates:
+  - { name: resolv.fact, owner: root, group: root, mode: '0644' }
+
+# Ansible template variables:
+resolv_fact_domain_enabled: True
+...

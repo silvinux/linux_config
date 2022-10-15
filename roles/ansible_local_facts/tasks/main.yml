@@ -1,0 +1,31 @@
+---
+# tasks file for ansible_local_facts
+- name: "Ensure {{ ansible_local_facts_dir.path }} exists"
+  ansible.builtin.file:
+    path: "{{ ansible_local_facts_dir.path }}"
+    state: directory
+    owner: "{{ ansible_local_facts_dir.owner }}"
+    group: "{{ ansible_local_facts_dir.group }}"
+    mode: "{{ ansible_local_facts_dir.mode }}"
+
+- name: "Ensure /etc/ansible/facts.d/ {{ files }} exists"
+  ansible.builtin.copy:
+    src: "{{ __ansible_local_facts_files_item.name }}"
+    dest: "{{ ansible_local_facts_dir.path }}/{{ __ansible_local_facts_files_item.name }}"
+    owner: "{{ __ansible_local_facts_files_item.owner }}"
+    group: "{{ __ansible_local_facts_files_item.group }}"
+    mode: "{{ __ansible_local_facts_files_item.mode }}"
+  loop: "{{ ansible_local_facts_files }}"
+  loop_control:
+    loop_var: "__ansible_local_facts_files_item"
+
+- name: "Ensure /etc/ansible/facts.d/ {{ templates }} exists"
+  ansible.builtin.template:
+    src: "{{ __ansible_local_facts_templates_item.name }}.j2"
+    dest: "{{ ansible_local_facts_dir.path }}/{{ __ansible_local_facts_templates_item.name }}"
+    owner: "{{ __ansible_local_facts_templates_item.owner }}"
+    group: "{{ __ansible_local_facts_templates_item.group }}"
+    mode: "{{ __ansible_local_facts_templates_item.mode }}"
+  loop: "{{ ansible_local_facts_templates }}"
+  loop_control:
+    loop_var: "__ansible_local_facts_templates_item"

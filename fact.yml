@@ -1,0 +1,9 @@
+---
+- name: "[install FACT] to disable option domain in /etc/resolv.conf"
+  hosts: hosts-facts
+  user: ansible
+  become: yes
+  become_user: root
+
+  roles:
+    - ansible_local_facts

@@ -1,140 +1,204 @@
 ---
+ansible_python_interpreter: /usr/bin/python3
+ansible_async_dir: /home/runner/.ansible_async/
 awx_webhook_event_type: Push Hook
-awx_webhook_event_guid: 72b1bf17bfe59c4aa2071530b4c7754407704fef
-awx_webhook_event_ref: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+awx_webhook_event_guid: ec44b84173d0655dfc40814ced4a656b32a586aa
+awx_webhook_event_ref: bbc68c8ff3e294465780d76c1cd3228c474d0f2f
 awx_webhook_status_api: null
 awx_webhook_payload:
   object_kind: push
   event_name: push
-  before: 76633c899fd52b5f199adc5038ecd27e78350fbc
-  after: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
-  ref: refs/heads/demo
-  checkout_sha: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+  before: 7d65b4c9f9a4966e5ff3195906fd5aab3ce993a9
+  after: bbc68c8ff3e294465780d76c1cd3228c474d0f2f
+  ref: refs/heads/demo-dev
+  checkout_sha: bbc68c8ff3e294465780d76c1cd3228c474d0f2f
   message: null
-  user_id: 1
-  user_name: Administrator
-  user_username: root
-  user_email: null
+  user_id: 5
+  user_name: aap-demo
+  user_username: aap-demo
+  user_email: ''
   user_avatar: >-
-    https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon
-  project_id: 36
+    https://secure.gravatar.com/avatar/479f0d04d94e7d1404d0227d60d09ff5?s=80&d=identicon
+  project_id: 23
   project:
-    id: 36
-    name: Simple Ansible Inventory
+    id: 23
+    name: inventory-demo-dev-yaml
     description: ''
-    web_url: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    web_url: 'https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml'
     avatar_url: null
-    git_ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    git_ssh_url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
     git_http_url: >-
-      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
-    namespace: Administrator
-    visibility_level: 0
-    path_with_namespace: root/simple-ansible-inventory
-    default_branch: master
+      https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml.git
+    namespace: os_gitops
+    visibility_level: 20
+    path_with_namespace: acme/os_gitops/inventory-demo-dev-yaml
+    default_branch: demo-dev
     ci_config_path: null
-    homepage: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
-    url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
-    ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    homepage: 'https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml'
+    url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
+    ssh_url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
     http_url: >-
-      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
+      https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml.git
   commits:
-    - id: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+    - id: bbc68c8ff3e294465780d76c1cd3228c474d0f2f
       message: |
-        group_vars New Structure
-      title: group_vars New Structure
-      timestamp: '2022-09-04T21:41:41+02:00'
+        Fix typo
+      title: Fix typo
+      timestamp: '2022-10-13T18:44:10+02:00'
       url: >-
-        http://gitlab.bcnconsulting.com/root/simple-ansible-inventory/-/commit/3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+        https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml/-/commit/bbc68c8ff3e294465780d76c1cd3228c474d0f2f
       author:
         name: silvinux
-        email: ansible@aapstdalone.bcnconsulting.com
-      added:
-        - group_vars/dev/linux_config/motd.yml
-        - group_vars/prd/linux_config/motd.yml
-        - host_vars/quorum.bcnconsulting.com/linux_config/motd.yml
-      modified: []
-      removed:
+        email: silvinux7@gmail.com
+      added: []
+      modified:
         - host_vars/quorum.bcnconsulting.com/linux_config_motd.yml
-  total_commits_count: 1
+      removed: []
+    - id: f4ea128de0d9eac7fb6a744e25f80104a2b99c47
+      message: |
+        Fix typo
+      title: Fix typo
+      timestamp: '2022-10-13T16:44:13+02:00'
+      url: >-
+        https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml/-/commit/f4ea128de0d9eac7fb6a744e25f80104a2b99c47
+      author:
+        name: silvinux
+        email: silvinux7@gmail.com
+      added:
+        - group_vars/demo-dev/linux_config_motd.yml
+        - group_vars/demo-dev/linux_config_sshd.yml
+        - host_vars/quorum.bcnconsulting.com/linux_config_rpms.yml
+        - group_vars/dbservers/all
+        - group_vars/dbservers/linux_config_rpms.yml
+        - group_vars/dbservers/linux_config_motd.yml
+        - group_vars/webservers/all
+        - group_vars/webservers/linux_config_sshd.yml
+        - group_vars/webservers/linux_config_rpms.yml
+      modified: []
+      removed: []
+    - id: 7d65b4c9f9a4966e5ff3195906fd5aab3ce993a9
+      message: |
+        Fix typo
+      title: Fix typo
+      timestamp: '2022-10-13T16:31:36+02:00'
+      url: >-
+        https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml/-/commit/7d65b4c9f9a4966e5ff3195906fd5aab3ce993a9
+      author:
+        name: silvinux
+        email: silvinux7@gmail.com
+      added:
+        - inventories/demo-dev/inventory_demo-dev.yml
+      modified: []
+      removed: []
+  total_commits_count: 3
   push_options: {}
   repository:
-    name: Simple Ansible Inventory
-    url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    name: inventory-demo-dev-yaml
+    url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
     description: ''
-    homepage: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    homepage: 'https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml'
     git_http_url: >-
-      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
-    git_ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
-    visibility_level: 0
+      https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml.git
+    git_ssh_url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
+    visibility_level: 20
 tower_webhook_event_type: Push Hook
-tower_webhook_event_guid: 72b1bf17bfe59c4aa2071530b4c7754407704fef
-tower_webhook_event_ref: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+tower_webhook_event_guid: ec44b84173d0655dfc40814ced4a656b32a586aa
+tower_webhook_event_ref: bbc68c8ff3e294465780d76c1cd3228c474d0f2f
 tower_webhook_status_api: null
 tower_webhook_payload:
   object_kind: push
   event_name: push
-  before: 76633c899fd52b5f199adc5038ecd27e78350fbc
-  after: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
-  ref: refs/heads/demo
-  checkout_sha: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+  before: 7d65b4c9f9a4966e5ff3195906fd5aab3ce993a9
+  after: bbc68c8ff3e294465780d76c1cd3228c474d0f2f
+  ref: refs/heads/demo-dev
+  checkout_sha: bbc68c8ff3e294465780d76c1cd3228c474d0f2f
   message: null
-  user_id: 1
-  user_name: Administrator
-  user_username: root
-  user_email: null
+  user_id: 5
+  user_name: aap-demo
+  user_username: aap-demo
+  user_email: ''
   user_avatar: >-
-    https://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80&d=identicon
-  project_id: 36
+    https://secure.gravatar.com/avatar/479f0d04d94e7d1404d0227d60d09ff5?s=80&d=identicon
+  project_id: 23
   project:
-    id: 36
-    name: Simple Ansible Inventory
+    id: 23
+    name: inventory-demo-dev-yaml
     description: ''
-    web_url: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    web_url: 'https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml'
     avatar_url: null
-    git_ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    git_ssh_url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
     git_http_url: >-
-      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
-    namespace: Administrator
-    visibility_level: 0
-    path_with_namespace: root/simple-ansible-inventory
-    default_branch: master
+      https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml.git
+    namespace: os_gitops
+    visibility_level: 20
+    path_with_namespace: acme/os_gitops/inventory-demo-dev-yaml
+    default_branch: demo-dev
     ci_config_path: null
-    homepage: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
-    url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
-    ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    homepage: 'https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml'
+    url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
+    ssh_url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
     http_url: >-
-      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
+      https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml.git
   commits:
-    - id: 3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+    - id: bbc68c8ff3e294465780d76c1cd3228c474d0f2f
       message: |
-        group_vars New Structure
-      title: group_vars New Structure
-      timestamp: '2022-09-04T21:41:41+02:00'
+        Fix typo
+      title: Fix typo
+      timestamp: '2022-10-13T18:44:10+02:00'
       url: >-
-        http://gitlab.bcnconsulting.com/root/simple-ansible-inventory/-/commit/3a8b42859dc1d72ac37f5f845e4730d7aaa93904
+        https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml/-/commit/bbc68c8ff3e294465780d76c1cd3228c474d0f2f
       author:
         name: silvinux
-        email: ansible@aapstdalone.bcnconsulting.com
+        email: silvinux7@gmail.com
+      added: []
+      modified:
+        - host_vars/quorum.bcnconsulting.com/linux_config_motd.yml
+      removed: []
+    - id: f4ea128de0d9eac7fb6a744e25f80104a2b99c47
+      message: |
+        Fix typo
+      title: Fix typo
+      timestamp: '2022-10-13T16:44:13+02:00'
+      url: >-
+        https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml/-/commit/f4ea128de0d9eac7fb6a744e25f80104a2b99c47
+      author:
+        name: silvinux
+        email: silvinux7@gmail.com
       added:
-        - group_vars/dev/linux_config.d/motd.yml
-        - group_vars/dev/linux_config.d/sshd.yml
-        - group_vars/dev/linux_config.d/yum.yml
-        - group_vars/dev/linux_config.d/sysctld.yml
-        - group_vars/prd/linux_config.d/motd.yml
-        - host_vars/quorum.bcnconsulting.com/linux_config.d/motd.yml
-        - host_vars/quorum.bcnconsulting.com/linux_config.d/sshd.yml
-        - host_vars/quorum.bcnconsulting.com/linux_config.d/etc_resolv.yml
+        - group_vars/demo-dev/linux_config_motd.yml
+        - group_vars/demo-dev/linux_config_sshd.yml
+        - host_vars/quorum.bcnconsulting.com/linux_config_rpms.yml
+        - group_vars/dbservers/all
+        - group_vars/dbservers/linux_config_rpms.yml
+        - group_vars/dbservers/linux_config_motd.yml
+        - group_vars/webservers/all
+        - group_vars/webservers/linux_config_sshd.yml
+        - group_vars/webservers/linux_config_rpms.yml
       modified: []
       removed: []
-  total_commits_count: 1
+    - id: 7d65b4c9f9a4966e5ff3195906fd5aab3ce993a9
+      message: |
+        Fix typo
+      title: Fix typo
+      timestamp: '2022-10-13T16:31:36+02:00'
+      url: >-
+        https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml/-/commit/7d65b4c9f9a4966e5ff3195906fd5aab3ce993a9
+      author:
+        name: silvinux
+        email: silvinux7@gmail.com
+      added:
+        - inventories/demo-dev/inventory_demo-dev.yml
+      modified: []
+      removed: []
+  total_commits_count: 3
   push_options: {}
   repository:
-    name: Simple Ansible Inventory
-    url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
+    name: inventory-demo-dev-yaml
+    url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
     description: ''
-    homepage: 'http://gitlab.bcnconsulting.com/root/simple-ansible-inventory'
+    homepage: 'https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml'
     git_http_url: >-
-      http://gitlab.bcnconsulting.com/root/simple-ansible-inventory.git
-    git_ssh_url: 'git@gitlab.bcnconsulting.com:root/simple-ansible-inventory.git'
-    visibility_level: 0
+      https://gitlab.bcnconsulting.com/acme/os_gitops/inventory-demo-dev-yaml.git
+    git_ssh_url: 'git@gitlab.bcnconsulting.com:acme/os_gitops/inventory-demo-dev-yaml.git'
+    visibility_level: 20
 ...

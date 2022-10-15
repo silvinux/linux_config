@@ -1,0 +1,27 @@
+#!/bin/bash
+# This FACT define a local facter in remote machine
+#      "ansible_local": {
+#            "site_location": {
+#                "value"
+
+function get_site_location {
+	case "$(hostname | cut -c1)" in
+		d)
+			VALUE="site1"
+			;;
+		p)
+			VALUE="site2"
+			;;
+		*)
+			VALUE="site3"
+			;;
+	esac
+}
+
+get_site_location
+
+cat << EOF
+{
+  "value" : "$VALUE"
+}
+EOF
