@@ -118,9 +118,9 @@
           when: host_dirs_dict is defined
       tags:
         - debug
-      when:
-        - ansible_local.controller_cluster.is_active
-        - ansible_local.controller_cluster.location | upper == controller_inventory_site_active | upper
+#      when:
+#        - ansible_local.controller_cluster.is_active
+#        - ansible_local.controller_cluster.location | upper == controller_inventory_site_active | upper
 
 
 ...
