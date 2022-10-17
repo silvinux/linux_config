@@ -2,29 +2,8 @@
 - hosts: localhost
   connection: local
   gather_facts: no
-  pre_tasks:
-    - debug:
-       msg: "{{ hostvars }}"
-      tags:
-        - test1
-
-    - name: Collect only selected facts
-      ansible.builtin.setup:
-        filter:
-          - 'ansible_local'
-          - 'ansible_fqdn'
-      tags:
-        - debug
   tasks:
     - block:
-        - name: Debug
-          debug:
-            msg:
-             # - "Controller cluster is enabled: {{ ansible_local.controller_cluster.is_active }}"
-             # - "OK"
-             # - "{{ ansible_local.controller_cluster.location }}"
-             - "{{ controller_inventory_site_active }}"
-
         - name: "Get the modified files over the dirs from all the received commits"
           set_fact:
             env: "{{ awx_webhook_payload.ref.split('/')[2] if awx_webhook_payload.ref.split('/')[1] == 'heads' else  awx_webhook_payload.project.default_branch }}"
@@ -53,9 +32,9 @@
 
         - name: "Run Group_Var Job to update the objects"
           ansible.controller.job_launch:
-            controller_host: demo-ctr1-dev.bcnconsulting.com
-            controller_username: admin
-            controller_password: redhat00
+            #controller_host: demo-ctr1-dev.bcnconsulting.com
+            #controller_username: admin
+            #controller_password: redhat00
             validate_certs: false
             name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
             inventory: "{{ orgs }} SmartInventory {{ org_tags.key }}"
@@ -71,7 +50,6 @@
           loop: "{{ group_dirs_dict | dict2items }}"
           loop_control:
             loop_var: org_tags
-          # when: group_dirs_dict is defined and run_groups is defined
           when: group_dirs_dict is defined
 
 #### Group Vars Run ####
@@ -96,9 +74,9 @@
 
         - name: "Run Host_Var Job to update the objects"
           ansible.controller.job_launch:
-            controller_host: demo-ctr1-dev.bcnconsulting.com
-            controller_username: admin
-            controller_password: redhat00
+            #controller_host: demo-ctr1-dev.bcnconsulting.com
+            #controller_username: admin
+            #controller_password: redhat00
             validate_certs: false
             name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
             inventory: "{{ orgs }} {{ env }} Inventory OsConfig"
@@ -118,9 +96,4 @@
           when: host_dirs_dict is defined
       tags:
         - debug
-#      when:
-#        - ansible_local.controller_cluster.is_active
-#        - ansible_local.controller_cluster.location | upper == controller_inventory_site_active | upper
-
-
 ...
