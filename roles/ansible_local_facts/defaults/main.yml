@@ -11,7 +11,6 @@ ansible_local_facts_dir:
 # Ansible local facts file list
 ansible_local_facts_files:
   - { name: site_location.fact, owner: root, group: root, mode: '0755' }
-  - { name: controller_cluster.fact, owner: root, group: root, mode: '0755' }
   - { name: dummy.fact, owner: root, group: root, mode: '0644' }
 
 # Ansible local facts template list
