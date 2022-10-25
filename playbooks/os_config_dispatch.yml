@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: '{{ group_target_os_mgmt | default("webservers") }}'
   gather_facts: yes
   remote_user: ansible
   roles:

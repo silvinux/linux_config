@@ -31,12 +31,14 @@
           vars:
             controller_launch_jobs:
             - name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
-              inventory: "{{ orgs }} SmartInventory {{ org_tags.key }}"
+              inventory: "{{ orgs }} {{ env }} Inventory OsConfig"
+              #inventory: "{{ orgs }} SmartInventory {{ org_tags.key }}"
               extra_vars:
                 orgs: "{{ orgs }}"
                 dir_orgs_vars: 'orgs_vars'
                 ansible_python_interpreter: "/usr/bin/python3"
                 env: "{{ env }}"
+                group_target_os_mgmt:  "{{ org_tags.key }}"
               tags: "{{ org_tags.value }}"
               validate_certs: false
               wait: yes
