@@ -1,5 +1,5 @@
 ---
-- hosts: '{{ group_target_os_mgmt | default("webservers") }}'
+- hosts: '{{ group_target_os_mgmt | default("all") }}'
   gather_facts: yes
   remote_user: ansible
   roles:
@@ -7,21 +7,4 @@
       vars:
         linux_config_dispatcher_roles:
           - {role: motd, var: linux_config_motd, tags: motd}
-
-  #tasks:
-    #- name: "Read env Defintions"
-    #  include_vars:
-    #    file: "{{ item.src }}"
-    #  with_filetree: "group_vars/tst/"
-    #  when: item.state == 'file'
-    #  register: contents
-
-    #- name: Configure Message of today
-    #  template:
-    #    src: templates/motd-facts.j2
-    #    dest: /etc/motd
-    #    owner: root
-    #    group: root
-    #    mode: 0644
-    #  become: true
-
+...

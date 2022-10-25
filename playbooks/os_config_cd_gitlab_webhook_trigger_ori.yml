@@ -32,17 +32,19 @@
 
         - name: "Run Group_Var Job to update the objects"
           ansible.controller.job_launch:
-            #controller_host: demo-ctr1-dev.bcnconsulting.com
-            #controller_username: admin
-            #controller_password: redhat00
+            controller_host: demo-ctr1-dev.bcnconsulting.com
+            controller_username: admin
+            controller_password: redhat00
             validate_certs: false
             name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
-            inventory: "{{ orgs }} SmartInventory {{ org_tags.key }}"
+            # inventory: "{{ orgs }} SmartInventory {{ org_tags.key }}"
+            inventory: "{{ orgs }} {{ env }} Inventory OsConfig"
             extra_vars:
               orgs: "{{ orgs }}"
               dir_orgs_vars: 'orgs_vars'
               ansible_python_interpreter: "/usr/bin/python3"
               env: "{{ env }}"
+              group_target_os_mgmt: "{{ org_tags.key }}"
             tags: "{{ org_tags.value }}"
             validate_certs: no
             wait: yes
@@ -50,6 +52,7 @@
           loop: "{{ group_dirs_dict | dict2items }}"
           loop_control:
             loop_var: org_tags
+          # when: group_dirs_dict is defined and groups[org_tags.key]
           when: group_dirs_dict is defined
 
 #### Group Vars Run ####
@@ -74,9 +77,9 @@
 
         - name: "Run Host_Var Job to update the objects"
           ansible.controller.job_launch:
-            #controller_host: demo-ctr1-dev.bcnconsulting.com
-            #controller_username: admin
-            #controller_password: redhat00
+            controller_host: demo-ctr1-dev.bcnconsulting.com
+            controller_username: admin
+            controller_password: redhat00
             validate_certs: false
             name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
             inventory: "{{ orgs }} {{ env }} Inventory OsConfig"
