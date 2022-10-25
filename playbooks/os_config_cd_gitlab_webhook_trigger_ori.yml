@@ -13,6 +13,8 @@
                                (awx_webhook_payload.commits | map(attribute='removed') | list))
                            | flatten }}"
 
+        - debug: var=list_of_dirs
+
         - name: Set reg_expressions to filter Groups_Vars
           set_fact:
             group_vars_reg_expression: "(group_vars)/(.*)/linux_config_(.*).ya?ml"
@@ -25,22 +27,26 @@
           loop: "{{ list_of_dirs }}"
           when: group_input_var | type_debug is match('list')
 
+        - debug: var=group_dirs_dict
+        - debug: var=group_dirs_dict.value
+
         - name: "Run Group_Var Job to update the objects"
-          include_role:
-            name: redhat_cop.controller_configuration.job_launch
-          vars:
-            controller_launch_jobs:
-            - name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
-              inventory: "{{ orgs }} SmartInventory {{ org_tags.key }}"
-              extra_vars:
-                orgs: "{{ orgs }}"
-                dir_orgs_vars: 'orgs_vars'
-                ansible_python_interpreter: "/usr/bin/python3"
-                env: "{{ env }}"
-              tags: "{{ org_tags.value }}"
-              validate_certs: false
-              wait: yes
-              verbosity: 0
+          ansible.controller.job_launch:
+            #controller_host: demo-ctr1-dev.bcnconsulting.com
+            #controller_username: admin
+            #controller_password: redhat00
+            validate_certs: false
+            name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
+            inventory: "{{ orgs }} SmartInventory {{ org_tags.key }}"
+            extra_vars:
+              orgs: "{{ orgs }}"
+              dir_orgs_vars: 'orgs_vars'
+              ansible_python_interpreter: "/usr/bin/python3"
+              env: "{{ env }}"
+            tags: "{{ org_tags.value }}"
+            validate_certs: no
+            wait: yes
+            verbosity: 0
           loop: "{{ group_dirs_dict | dict2items }}"
           loop_control:
             loop_var: org_tags
@@ -64,25 +70,30 @@
           loop: "{{ list_of_dirs }}"
           when: host_input_var | type_debug is match('list')
 
+        - debug: var=host_dirs_dict
+
         - name: "Run Host_Var Job to update the objects"
-          include_role:
-            name: redhat_cop.controller_configuration.job_launch
-          vars:
-            controller_launch_jobs:
-            - name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
-              inventory: "{{ orgs }} {{ env }} Inventory OsConfig"
-              limit: "{{ org_tags.key }}"
-              extra_vars:
-                orgs: "{{ orgs }}"
-                dir_orgs_vars: 'orgs_vars'
-                ansible_python_interpreter: "/usr/bin/python3"
-                env: "{{ env }}"
-              tags: "{{ org_tags.value }}"
-              validate_certs: false
-              wait: yes
-              verbosity: 0
+          ansible.controller.job_launch:
+            #controller_host: demo-ctr1-dev.bcnconsulting.com
+            #controller_username: admin
+            #controller_password: redhat00
+            validate_certs: false
+            name: "{{ orgs }} OS_Mgmt_JobTemplate_CD_Dispatcher"
+            inventory: "{{ orgs }} {{ env }} Inventory OsConfig"
+            limit: "{{ org_tags.key }}"
+            extra_vars:
+              orgs: "{{ orgs }}"
+              dir_orgs_vars: 'orgs_vars'
+              ansible_python_interpreter: "/usr/bin/python3"
+              env: "{{ env }}"
+            tags: "{{ org_tags.value }}"
+            validate_certs: no
+            wait: yes
+            verbosity: 0
           loop: "{{ host_dirs_dict | dict2items }}"
           loop_control:
             loop_var: org_tags
           when: host_dirs_dict is defined
+      tags:
+        - debug
 ...
