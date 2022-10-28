@@ -1,0 +1,9 @@
+---
+- name: "Update OS | Include Tasks for Host Reboot"
+  include_tasks: reboot-rhel{{ ansible_distribution_major_version }}.yml
+  args:
+    apply:
+      tags: linux-os-reboot
+      become: yes
+  tags: linux-os-reboot
+...

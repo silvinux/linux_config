@@ -1,0 +1,24 @@
+---
+# defaults file for linux-os-upgrade
+#
+# List of filesystems to be check before upgrade
+filesystem_list_to_be_checked:
+  - { mount: "/boot"}
+  - { mount: "/" }
+  - { mount: "/var" }
+  - { mount: "/tmp" }
+
+# Free space percentage needed to be able to upgrade
+filesystem_threshold: 30
+
+# Update All Packages
+yum_update: false
+
+# Update Security and Bugfix Packages
+yum_update_security: true
+
+# List of repositories to disable for the update operation. These repos will not persist beyond the transaction.
+disable_repository_list: '*'
+# List of repositories to enable for the update operation. These repos will not persist beyond the transaction.
+enable_repository_list: 'rhel-*-server-rpms'
+...

@@ -1,0 +1,9 @@
+---
+# defaults file for linux_os_reboot
+
+#  Reboot only when needed
+reboot_only_if_needed: true
+
+# Should update satellite facts?
+update_satellite_facts: false
+...

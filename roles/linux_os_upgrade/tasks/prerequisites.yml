@@ -1,0 +1,25 @@
+---
+#- name: "Debug ansible_mounts to be checked"
+#  debug:
+#    msg:
+#      - "{{ __ansible_mounts_item.0.size_total }}"
+#      - "{{ __ansible_mounts_item.0.size_available }}"
+#      - "{{ __ansible_mounts_item.0.size_total|float }}"
+#      - "{{ __ansible_mounts_item.0.size_total|float *  filesystem_threshold / 100 }}"
+#  loop: '{{ (ansible_mounts) | product(filesystem_list_to_be_checked) | list }}'
+#  loop_control:
+#    loop_var: __ansible_mounts_item
+#  when: "{{ __ansible_mounts_item.0.mount ==  __ansible_mounts_item.1.mount }}"
+
+- block:
+  - name: "Check available filesystem space before start the upgrade. It must have at least {{ filesystem_threshold }} % available in the filesystem"
+    ansible.builtin.assert:
+      that:
+        - "{{ __ansible_mounts_item.0.size_available  > (__ansible_mounts_item.0.size_total|float *  filesystem_threshold / 100) }}"
+      fail_msg: "Please verify file system {{ __ansible_mounts_item.0.mount }} because has {{ (((__ansible_mounts_item.0.size_total - __ansible_mounts_item.0.size_available) / __ansible_mounts_item.0.size_total ) * 100) | round | int }}% usage"
+      success_msg: "You're good to go"
+    loop: '{{ (ansible_mounts) | product(filesystem_list_to_be_checked) | list }}'
+    loop_control:
+      loop_var: __ansible_mounts_item
+    when: "{{ __ansible_mounts_item.0.mount ==  __ansible_mounts_item.1.mount }}"
+...
