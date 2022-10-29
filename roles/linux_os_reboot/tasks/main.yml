@@ -1,9 +1,22 @@
 ---
-- name: "Update OS | Include Tasks for Host Reboot"
-  include_tasks: reboot-rhel{{ ansible_distribution_major_version }}.yml
+- name: Host Reboot | Include variables
+  ansible.builtin.include_tasks: variables.yml
   args:
     apply:
       tags: linux-os-reboot
       become: yes
   tags: linux-os-reboot
+
+- name: "Host Reboot | Include Tasks for Host Reboot (RedHat)"
+  ansible.builtin.include_tasks: reboot-rhel.yml
+  args:
+    apply:
+      tags:
+        - linux-os-reboot
+        - rhel-os-reboot
+      become: yes
+  tags:
+    - linux-os-reboot
+    - rhel-os-reboot
+  when: ansible_os_family == 'RedHat'
 ...

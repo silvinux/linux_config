@@ -8,12 +8,6 @@
   changed_when: packages_need_update_result_rhel8.rc == 100
   failed_when: packages_need_update_result_rhel8.rc != 0 and packages_need_update_result_rhel8.rc != 100
 
-- name: "Update OS | Set Defaults"
-  ansible.builtin.set_fact:
-    yum_update: false
-    yum_update_security: true
-  when: yum_update is undefined or yum_update_security is undefined
-
 - name: "Update OS | Update All Packages"
   ansible.builtin.yum:
     name: '*'

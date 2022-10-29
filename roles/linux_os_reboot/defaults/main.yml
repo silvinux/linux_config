@@ -6,4 +6,7 @@ reboot_only_if_needed: true
 
 # Should update satellite facts?
 update_satellite_facts: false
+
+# Satellite Version
+satellite_version: 6.9
 ...

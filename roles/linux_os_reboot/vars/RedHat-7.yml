@@ -1,0 +1,14 @@
+---
+ # Enablerepo to update satellite facts
+satellite_tools_enable_repo: "rhel-7-server-satellite-tools-{{ satellite_version }}-rpms"
+
+# List of packages needed installed to update satellite facts
+satellite_tools_pkg_install_list:
+  - katello-host-tools
+  - yum-utils
+
+# Commands to Update Satellite facts
+update_satellite_facts_cmds:
+  - "subscription-manager facts --update"
+  - "katello-package-upload"
+...

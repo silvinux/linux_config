@@ -1,0 +1,15 @@
+---
+ # Enablerepo to update satellite facts
+satellite_tools_enable_repo: "satellite-tools-{{ satellite_version }}-for-rhel-8-x86_64-rpms"
+
+# List of packages needed installed to update satellite facts
+satellite_tools_pkg_install_list:
+  - katello-host-tools
+  - yum-utils
+  - dnf-plugin-subscription-manager
+
+# Commands to Update Satellite facts
+update_satellite_facts_cmds:
+  - "subscription-manager facts --update"
+  - "dnf uploadprofile --force-upload" # in rhel8 there's no katello-package-upload , dnf subscription-manager plugin used instead
+...

@@ -1,0 +1,38 @@
+---
+- name: "Host Reboot | Install yum-utils (RedHat)"
+  ansible.builtin.yum:
+    name: "{{ satellite_tools_pkg_install_list }}"
+    enablerepo: "{{ satellite_tools_enable_repo }}"
+    state: present
+  when:
+    - satellite_version is defined
+    - update_satellite_facts
+
+- block:
+  - name: "Host Reboot | Detect if reboot is required (RedHat)"
+    ansible.builtin.command:
+      cmd: needs-restarting --reboothint
+    register: needs_restart_result_rh
+    failed_when: needs_restart_result_rh.rc > 1
+    changed_when: needs_restart_result_rh.rc == 1
+  when: reboot_only_if_needed
+
+- name: Host Reboot | Schedule Reboot (RedHat)
+  ansible.builtin.reboot:
+    pre_reboot_delay: 10
+    post_reboot_delay: 65
+    reboot_timeout: 1800
+    test_command: uptime
+  when: needs_restart_result_rh is changed or not reboot_only_if_needed
+
+- name: "Host Reboot | Update Satellite facts (RedHat)"
+  ansible.builtin.shell: "{{ __update_satellite_facts_cmds_item }}"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/bin:/usr/sbin"
+  loop: "{{ update_satellite_facts_cmds }}"
+  loop_control:
+    loop_var: __update_satellite_facts_cmds_item
+  when:
+     - satellite_version is defined
+     - update_satellite_facts
+...
