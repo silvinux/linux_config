@@ -4,7 +4,4 @@
   remote_user: ansible
   roles:
     - role: linux_os_update
-      vars:
-        linux_config_dispatcher_roles:
-          - {role: motd, var: linux_config_motd, tags: motd}
 ...
