@@ -3,7 +3,7 @@
   gather_facts: yes
   remote_user: ansible
   roles:
-    - role: linux_os_upgrade
+    - role: linux_os_update_upgrade
       vars:
         linux_config_dispatcher_roles:
           - {role: motd, var: linux_config_motd, tags: motd}

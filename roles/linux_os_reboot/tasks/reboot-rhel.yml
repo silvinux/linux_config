@@ -4,9 +4,7 @@
     name: "{{ satellite_tools_pkg_install_list }}"
     enablerepo: "{{ satellite_tools_enable_repo }}"
     state: present
-  when:
-    - satellite_version is defined
-    - update_satellite_facts
+  when: update_satellite_facts
 
 - block:
   - name: "Host Reboot | Detect if reboot is required (RedHat)"
@@ -32,7 +30,5 @@
   loop: "{{ update_satellite_facts_cmds }}"
   loop_control:
     loop_var: __update_satellite_facts_cmds_item
-  when:
-     - satellite_version is defined
-     - update_satellite_facts
+  when: update_satellite_facts
 ...

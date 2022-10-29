@@ -4,8 +4,8 @@
   args:
     apply:
       tags: linux-os-reboot
-      become: yes
   tags: linux-os-reboot
+  when: update_satellite_facts
 
 - name: "Host Reboot | Include Tasks for Host Reboot (RedHat)"
   ansible.builtin.include_tasks: reboot-rhel.yml
