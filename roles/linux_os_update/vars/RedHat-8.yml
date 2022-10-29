@@ -1,0 +1,8 @@
+---
+# List of repositories to enable for the update operation. These repos will not persist beyond the transaction.
+enable_repository_list:
+  - rhel-8-for-x86_64-appstream-rpms
+  - rhel-8-for-x86_64-baseos-rpms
+  - rhel-8-for-x86_64-supplementary-rpms
+  - rhel-7-server-satellite-tools-{{ satellite_version }}-rpms
+...

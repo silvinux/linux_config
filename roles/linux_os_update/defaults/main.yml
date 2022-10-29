@@ -20,4 +20,6 @@ yum_update_security: true
 
 # List of repositories to disable for the update operation. These repos will not persist beyond the transaction.
 disable_repository_list: '*'
+
+exclude_packages_list: []
 ...

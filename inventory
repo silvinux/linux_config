@@ -1,0 +1,9 @@
+[all]
+rhel7 ansible_password=redhat00
+quorum ansible_password=redhat00
+
+[rhel8-version]
+quorum
+
+[rhel8-version:vars]
+exclude_packages_list=['pcs','fence-agents-all','pacemaker-cli','pacemaker-cluster-libs','corosync','corosynclib','pacemaker-libs','pacemaker-schemas','dhcp-client','bind-export','bind-export-libs','dhcp-common','dhcp-libs']
