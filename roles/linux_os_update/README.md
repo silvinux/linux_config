@@ -34,7 +34,8 @@ Including an example of how to use your role (for instance, with variables passe
 
 
 
-$ ansible-playbook -i inventory playbook.yml --tags prerequisites,os-update-and-upgrade-rhel -e '{filesystem_threshold: 65}'
+$ ansible-playbook -i inventory  playbooks/os_config_update.yml --tags prerequisites,os-update-rhel -e '{filesystem_threshold: 65}'
+$ ansible-playbook -i inventory -l quorum playbooks/os_config_update.yml --tags os-update-rhel -e '{yum_update: true, yum_update_security: false }'
 
 License
 -------
